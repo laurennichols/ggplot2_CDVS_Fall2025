@@ -16,6 +16,7 @@ Install and load the following packages: tidyverse (includes ggplot and dplyr) &
 
 # Load packages. Everytime you open a new workspace.
 library(tidyverse)
+library(ggrepel) #ggrepel is a useful package for formatting labels
 
 ```
 
@@ -52,7 +53,7 @@ head(happy)
 happy |> 
   ggplot(aes(continent, happiness))+
   geom_boxplot(outlier.shape = NA)+
-  geom_jitter(col='orange',alpha=0.5)
+  geom_jitter(col='blue',alpha=0.5)
 
 
 ```
@@ -72,7 +73,7 @@ happy |>
 ```{r Solution}
 happy |> 
   filter(year==2019) |> 
-  ggplot(aes(reorder(continent,happiness), happiness))+
+  ggplot(aes(reorder(continent,happiness, FUN = mean), happiness))+
   geom_boxplot()+
   geom_jitter()
 
@@ -101,7 +102,7 @@ happy |>
 
 happy |> 
   filter(year==2019) |> 
-  ggplot(aes(GDP, happiness))+
+  ggplot(aes(exp(GDP), happiness))+
   geom_point()
 
 ```
@@ -196,7 +197,7 @@ happy |>
 ```
 
 ```{r}
-library(ggrepel)
+
 
 prettyColors = c('darkgrey','darkorange')
 
@@ -214,12 +215,4 @@ happy |>
                   col='darkorange',
                   show.legend=FALSE)
 
-```
-
-```{r}
-happy |> 
-  filter(year==2019) |> 
-  ggplot(aes(GDP, happiness))+
-  geom_point()
-  geom_smooth(method="lm")
 ```
